@@ -30,7 +30,10 @@ table.Merge( _LAMBDAPLAYERSWEAPONS, {
             wepent:EmitSound( "weapons/doom3/rocket/rocket_launcher_blast_" .. LambdaRNG( 4 ) .. ".wav", 100 )
         
             local shootPos = wepent:GetPos()
-            local targetPos = ( target:GetPos() + target:GetVelocity() * LambdaRNG( 0.2, 0.4, true ) )
+            local targetPos = target:GetPos()
+            
+            local predPos = ( targetPos + target:GetVelocity() * LambdaRNG( 0.2, 0.4, true ) )
+            if shootPos:DistToSqr( predPos ) > shootPos:DistToSqr( targetPos ) then targetPos = predPos end
 
             local shootAng = ( targetPos - shootPos ):Angle()
             shootAng:RotateAroundAxis( shootAng:Up(), LambdaRNG( -2, 2 ) )
